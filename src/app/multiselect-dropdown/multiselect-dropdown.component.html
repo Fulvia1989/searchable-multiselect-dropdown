@@ -1,0 +1,45 @@
+<label for="jokes">Pick what type of jokes you like</label>
+<div class="combo-wrap">
+  <input
+    type="text"
+    id="jokes"
+    role="combobox"
+    aria-controls="joketypes"
+    aria-autocomplete="list"
+    aria-expanded="false"
+    data-active-option="item1"
+     />
+  <span aria-hidden="true" data-trigger="multiselect"></span>
+  <ul id="joketypes" role="listbox" aria-label="Jokes" class="dropdown-list">
+    <li class="active" role="option" id="item1" >
+      <div class="checkbox">
+          <input type="checkbox" id="puns" name="puns" value="puns" />
+          <label for="puns">Puns</label>
+      </div>
+    </li>
+    <li class="option" role="option" id="item2">
+        <label>
+            <input type="checkbox" name="riddles" value="riddles" />
+            Riddles
+        </label>
+    </li>
+    <li class="option" role="option" id="item3">
+        <label>
+            <input type="checkbox" name="observations" value="observations" />
+            Observations
+        </label>
+    </li>
+    <li class="option" role="option" id="item4">
+        <label>
+            <input type="checkbox" name="knock-knock" value="knock-knock" />
+            Knock-knock
+        </label>
+    </li>
+    <li class="option" role="option" id="item5">
+        <label>
+            <input type="checkbox" name="one-liners" value="one-liners" />
+            One liners
+        </label>
+    </li>
+  </ul>
+</div>

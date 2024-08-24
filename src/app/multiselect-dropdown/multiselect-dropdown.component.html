@@ -3,43 +3,54 @@
   <input
     type="text"
     id="jokes"
+    name="jokes"
+    [(ngModel)]="filter"
+    (click)="toggleDropdown()"
+    (keydown)="handleKeyPress($event)"
     role="combobox"
     aria-controls="joketypes"
     aria-autocomplete="list"
-    aria-expanded="false"
-    data-active-option="item1"
-     />
+    [attr.aria-expanded]="isDropdownOpen"
+    />
   <span aria-hidden="true" data-trigger="multiselect"></span>
-  <ul id="joketypes" role="listbox" aria-label="Jokes" class="dropdown-list">
-    <li class="active" role="option" id="item1" >
+  <ul id="joketypes" role="listbox" aria-label="Jokes" class="dropdown-list"
+  [ngClass]="{'active': isDropdownOpen}"
+  >
+    <li class="option first" role="option" id="item0" >
+        <div class="checkbox">
+            <input type="checkbox" id="all" name="all" value="all" />
+            <label for="all">Select All</label>
+        </div>
+    </li>
+    <li class="option" role="option" id="item1" >
       <div class="checkbox">
           <input type="checkbox" id="puns" name="puns" value="puns" />
           <label for="puns">Puns</label>
       </div>
     </li>
     <li class="option" role="option" id="item2">
-        <label>
-            <input type="checkbox" name="riddles" value="riddles" />
-            Riddles
-        </label>
+        <div class="checkbox">
+            <input type="checkbox" id="riddles" name="riddles" value="riddles" />
+            <label for="riddles">Riddles</label>
+        </div>
     </li>
     <li class="option" role="option" id="item3">
-        <label>
-            <input type="checkbox" name="observations" value="observations" />
-            Observations
-        </label>
+        <div class="checkbox">
+            <input type="checkbox" id="observations" name="observations" value="observations" />
+            <label for="observations">Observations</label>
+        </div>
     </li>
     <li class="option" role="option" id="item4">
-        <label>
-            <input type="checkbox" name="knock-knock" value="knock-knock" />
-            Knock-knock
-        </label>
+        <div class="checkbox">
+            <input type="checkbox" id="knock" name="knock" value="knock" />
+            <label for="knock">Knock-knock</label>
+        </div>
     </li>
     <li class="option" role="option" id="item5">
-        <label>
-            <input type="checkbox" name="one-liners" value="one-liners" />
-            One liners
-        </label>
+        <div class="checkbox">
+            <input type="checkbox" id="one-liners" name="one-liners" value="one-liners" />
+            <label for="one-liners">One liners</label>
+        </div>
     </li>
   </ul>
 </div>

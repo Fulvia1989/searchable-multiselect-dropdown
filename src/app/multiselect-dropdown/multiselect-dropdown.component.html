@@ -12,7 +12,7 @@
     aria-controls="joketypes"
     aria-autocomplete="list"
     [attr.aria-expanded]="isDropdownOpen"
-    [attr.aria-activedescendant]="activedescendantId"
+    [attr.aria-activedescendant]="currentOptionIndex"
     />
   <span aria-hidden="true" data-trigger="multiselect"></span>
 
@@ -24,8 +24,8 @@
     @for (item of options; track item.id) {
         <li role="option" id="item{{item.id}}" 
          [attr.aria-selected]="item.selected" 
-         [ngClass]="{'first':!item.id}"
-         [attr.data-activedescendant]="item.isActiveDescendant">
+         [ngClass]="{'first':!item.id,'current':item.isActiveDescendant}"
+        >
             <div class="checkbox">
                 <input type="checkbox" [id]="item.id" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
                 <label [for]="item.id">{{item.name}}</label>

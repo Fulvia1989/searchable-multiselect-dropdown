@@ -18,15 +18,14 @@ export class MultiselectDropdownComponent {
   isDropdownOpen:boolean = false;
   filter:string='';
   currentOptionIndex:number = 0;
-  activedescendantId:number = 0;
 
   options:OptionElement[]=[
     {id:0, name:'all',label:'Select All',isActiveDescendant:true,selected:false},
     {id:1, name:'puns',label:'Puns',isActiveDescendant:false,selected:false},
     {id:2, name:'riddles',label:'Riddles',isActiveDescendant:false,selected:false},
     {id:3, name:'observations',label:'Observations',isActiveDescendant:false,selected:false},
-    {id:4, name:'knock',label:'Knock-knock',isActiveDescendant:true,selected:false},
-    {id:5, name:'one-liners',label:'One-liners',isActiveDescendant:true,selected:false},
+    {id:4, name:'knock',label:'Knock-knock',isActiveDescendant:false,selected:false},
+    {id:5, name:'one-liners',label:'One-liners',isActiveDescendant:false,selected:false},
   ];
 
   @ViewChild('input') input!: ElementRef;
@@ -53,21 +52,17 @@ export class MultiselectDropdownComponent {
     }
   };
   focusCurrentOption = () => {
-    const elements = document.querySelectorAll('[role="option"]');
-    const currentOption = elements[this.currentOptionIndex] as HTMLElement;
-  
-    currentOption.classList.add('current');
-    currentOption.focus();
-    currentOption.scrollIntoView({
+
+    let itemId = `item${this.currentOptionIndex}`;
+    const currentOption = document.getElementById(itemId);
+    currentOption?.classList.add('current');
+    currentOption?.focus();
+    currentOption?.scrollIntoView({
       block: 'nearest',
     });
   
-    elements.forEach((option, index) => {
-      if (option !== currentOption) {
-        option.classList.remove('current');
-      }
-    });
   };
+
 
   handleKeyPress = (event:KeyboardEvent) => {
     //event.preventDefault();
@@ -85,10 +80,10 @@ export class MultiselectDropdownComponent {
       case KeyboardKey.ArrowDown:
         this.moveFocusDown();
         break;
-      case 'ArrowUp':
+      case KeyboardKey.ArrowUp:
         this.moveFocusUp();
         break;
-      case 'Enter':
+      case KeyboardKey.Enter:
       case ' ':
         this.selectCurrentOption();
         break;
@@ -97,14 +92,23 @@ export class MultiselectDropdownComponent {
     }
   }
   };
-  moveFocusDown = () => {
-    const elements = document.querySelectorAll('[role="option"]');
 
-    if (this.currentOptionIndex < elements.length - 1) {
+  moveFocusDown = () => {
+    // const elements = document.querySelectorAll('[role="option"]');
+
+    if (this.currentOptionIndex < this.options.length - 1) {
       this.currentOptionIndex++;
     } else {
       this.currentOptionIndex = 0;
-    }
+    };
+    this.options.forEach(el =>{
+      if(el.id == this.currentOptionIndex){
+        el.isActiveDescendant=true;
+      }else{
+        el.isActiveDescendant=false;
+      }
+    });
+ 
     this.focusCurrentOption();
   };
   moveFocusUp = () => {

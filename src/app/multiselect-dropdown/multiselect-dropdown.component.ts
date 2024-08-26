@@ -1,7 +1,8 @@
 import { NgClass } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { KeyboardKey } from './keyboard';
+import { KeyboardKey } from './models/keyboard';
+import { OptionElement } from './models/select';
 
 @Component({
   selector: 'multiselect-dropdown',
@@ -17,6 +18,16 @@ export class MultiselectDropdownComponent {
   isDropdownOpen:boolean = false;
   filter:string='';
   currentOptionIndex:number = 0;
+  activedescendantId:number = 0;
+
+  options:OptionElement[]=[
+    {id:0, name:'all',label:'Select All',isActiveDescendant:true,selected:false},
+    {id:1, name:'puns',label:'Puns',isActiveDescendant:false,selected:false},
+    {id:2, name:'riddles',label:'Riddles',isActiveDescendant:false,selected:false},
+    {id:3, name:'observations',label:'Observations',isActiveDescendant:false,selected:false},
+    {id:4, name:'knock',label:'Knock-knock',isActiveDescendant:true,selected:false},
+    {id:5, name:'one-liners',label:'One-liners',isActiveDescendant:true,selected:false},
+  ]
 
   @HostListener('document:click', ['$event'])
   handleDocumentInteraction = (event:any) => {
@@ -59,6 +70,7 @@ export class MultiselectDropdownComponent {
 
   handleKeyPress = (event:KeyboardEvent) => {
     //event.preventDefault();
+    console.log(event);
    const { key } = event;
    const openKeys:string[] = [KeyboardKey.Enter, KeyboardKey.Space];
  
@@ -114,18 +126,34 @@ export class MultiselectDropdownComponent {
   selectOptionByElement = (optionElement:any) => {
     console.log(optionElement);
     // const optionValue = optionElement.textContent;
-    // const elements = document.querySelectorAll('[role="option"]');
+     const elements = document.querySelectorAll('[role="option"]');
     // console.log(elements);
 
     // //elements.textContent = optionValue;
-    // elements.forEach(option => {
-    //   option.classList.remove('active');
-    //   option.setAttribute('aria-selected', 'false');
-    // });
+    elements.forEach(option => {
+      option.classList.remove('active');
+      option.setAttribute('aria-selected', 'false');
+    });
   
-    // optionElement.classList.add('active');
-    // optionElement.setAttribute('aria-selected', 'true');
+     optionElement.classList.add('active');
+     optionElement.setAttribute('aria-selected', 'true');
   }
+
+  /**
+ * Triggers on click and selects the option and sets the text in the input.
+ * @param option 
+ */
+  optionClicked(option:OptionElement,event:any){
+    option.selected=true;
+    this.activedescendantId=option.id;
+    //this.toggleList();
+  
+    // if(event!=null){
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
+  }
+  
 
 
 }

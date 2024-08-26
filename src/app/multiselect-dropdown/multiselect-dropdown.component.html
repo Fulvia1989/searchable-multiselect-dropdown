@@ -11,12 +11,27 @@
     aria-controls="joketypes"
     aria-autocomplete="list"
     [attr.aria-expanded]="isDropdownOpen"
+    [attr.aria-activedescendant]="activedescendantId"
     />
   <span aria-hidden="true" data-trigger="multiselect"></span>
+
   <ul id="joketypes" role="listbox" aria-label="Jokes" class="dropdown-list"
+  [attr.aria-hidden]="!isDropdownOpen"
   [ngClass]="{'active': isDropdownOpen}"
   >
-    <li class="option first" role="option" id="item0" >
+    @for (item of options; track item.id) {
+        <li role="option" id="item{{item.id}}" 
+         [attr.aria-selected]="item.selected" 
+         (click)="optionClicked(item,$event)" 
+         [ngClass]="{'first':!item.id}"
+         [attr.data-activedescendant]="item.isActiveDescendant">
+            <div class="checkbox">
+                <input type="checkbox" [id]="item.id" [name]="item.name" [value]="item.name" />
+                <label for="all">{{item.name}}</label>
+            </div>
+        </li>
+    }
+    <!-- <li class="option first" role="option" id="item0" >
         <div class="checkbox">
             <input type="checkbox" id="all" name="all" value="all" />
             <label for="all">Select All</label>
@@ -51,6 +66,6 @@
             <input type="checkbox" id="one-liners" name="one-liners" value="one-liners" />
             <label for="one-liners">One liners</label>
         </div>
-    </li>
+    </li> -->
   </ul>
 </div>

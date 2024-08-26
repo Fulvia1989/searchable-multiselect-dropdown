@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KeyboardKey } from './models/keyboard';
 import { OptionElement } from './models/select';
@@ -27,14 +27,16 @@ export class MultiselectDropdownComponent {
     {id:3, name:'observations',label:'Observations',isActiveDescendant:false,selected:false},
     {id:4, name:'knock',label:'Knock-knock',isActiveDescendant:true,selected:false},
     {id:5, name:'one-liners',label:'One-liners',isActiveDescendant:true,selected:false},
-  ]
+  ];
+
+  @ViewChild('input') input!: ElementRef;
+  @ViewChild('dropdown') dropdown!: ElementRef;
 
   @HostListener('document:click', ['$event'])
   handleDocumentInteraction = (event:any) => {
-    const input = document.querySelector('[role="combobox"]');
-    const dropdown = document.querySelector('[role="listbox"]');
-    const isClickInsideButton = input?.contains(event.target);
-    const isClickInsideDropdown = dropdown?.contains(event.target);
+
+    const isClickInsideButton = this.input.nativeElement.contains(event.target);
+    const isClickInsideDropdown = this.dropdown.nativeElement.contains(event.target);
   
     if (!isClickInsideButton && !isClickInsideDropdown && this.isDropdownOpen){
       this.toggleDropdown();
@@ -46,9 +48,8 @@ export class MultiselectDropdownComponent {
     if (this.isDropdownOpen) {
       this.focusCurrentOption();
     } else {
-      const input = document.querySelector('[role="listbox"]') as HTMLInputElement;
 
-      input?.focus(); // focus the button when the dropdown is closed just like the select element
+      this.input.nativeElement.focus();
     }
   };
   focusCurrentOption = () => {
@@ -139,20 +140,6 @@ export class MultiselectDropdownComponent {
      optionElement.setAttribute('aria-selected', 'true');
   }
 
-  /**
- * Triggers on click and selects the option and sets the text in the input.
- * @param option 
- */
-  optionClicked(option:OptionElement,event:any){
-    option.selected=true;
-    this.activedescendantId=option.id;
-    //this.toggleList();
-  
-    // if(event!=null){
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-  }
   
 
 

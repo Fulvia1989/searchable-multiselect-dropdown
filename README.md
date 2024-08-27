@@ -14,14 +14,20 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Roles, States, and Properties
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- The element that contains or owns the options has role listbox.
+- The element with role listbox has aria-labelledby or aria-label.
+- The element with role listbox has aria-multiselectable set to true.
+- Each option has role option.
+- Each selected option has both aria-checked and aria-selected set to true (see Note).
+- All options that are not selected have both aria-checked and aria-selected set to false (see Note).
+- 
+Note:
+The Listbox Pattern recommends using aria-checked for multiselect listboxes and recommends against using both aria-checked and aria-selected. However, this is not supported by current, leading screen readers, JAWS 2024 and NVDA 2024:
 
-## Running end-to-end tests
+Both screen readers say "not selected" if aria-selected is undefined, so options with only aria-checked="true" are indciated as "checked, not selected", which is incorrect.
+Neither screen reader says "selected" if aria-selected="true", making it difficult to identify selected options if only aria-selected is used. (This behavior is designed for single-select listboxes where selection follows focus and "selected" is implied.)
+Until leading screen readers change the above behaviors, the only effective solution appears to be to use both aria-checked and aria-selected.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

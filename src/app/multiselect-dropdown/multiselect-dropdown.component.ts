@@ -55,7 +55,7 @@ export class MultiselectDropdownComponent {
 
     let itemId = `item${this.currentOptionIndex}`;
     const currentOption = document.getElementById(itemId);
-    currentOption?.classList.add('current');
+    //currentOption?.classList.add('current');
     currentOption?.focus();
     currentOption?.scrollIntoView({
       block: 'nearest',
@@ -112,12 +112,12 @@ export class MultiselectDropdownComponent {
     this.focusCurrentOption();
   };
   moveFocusUp = () => {
-    const elements = document.querySelectorAll('[role="option"]');
+    //const elements = document.querySelectorAll('[role="option"]');
 
     if (this.currentOptionIndex > 0) {
       this.currentOptionIndex--;
     } else {
-      this.currentOptionIndex = elements.length - 1;
+      this.currentOptionIndex = this.options.length - 1;
     }
     this.focusCurrentOption();
   };

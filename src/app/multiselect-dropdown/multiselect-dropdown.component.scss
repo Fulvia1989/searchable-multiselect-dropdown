@@ -38,6 +38,9 @@ ul{
             background: rgba(211, 211, 211, 0.5);
 
         }
+        &:focus{
+            border: 1px dashed black;
+        }
     }
 }
 

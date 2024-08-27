@@ -1,32 +1,36 @@
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KeyboardKey } from './models/keyboard';
 import { OptionElement } from './models/select';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 
 @Component({
   selector: 'multiselect-dropdown',
   standalone: true,
   imports: [
     NgClass,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './multiselect-dropdown.component.html',
   styleUrl: './multiselect-dropdown.component.scss'
 })
 export class MultiselectDropdownComponent {
   isDropdownOpen:boolean = false;
-  filter:string='';
+  filter:FormControl = new FormControl<string>('');
   currentOptionIndex:number = 0;
 
-  options:OptionElement[]=[
-    {id:0, name:'all',label:'Select All',isActiveDescendant:true,selected:false},
-    {id:1, name:'puns',label:'Puns',isActiveDescendant:false,selected:false},
-    {id:2, name:'riddles',label:'Riddles',isActiveDescendant:false,selected:false},
-    {id:3, name:'observations',label:'Observations',isActiveDescendant:false,selected:false},
-    {id:4, name:'knock',label:'Knock-knock',isActiveDescendant:false,selected:false},
-    {id:5, name:'one-liners',label:'One-liners',isActiveDescendant:false,selected:false},
-  ];
+  options:OptionElement[]=[];
+  @Input() set filteredElements(value:OptionElement[]){
+    this.currentOptionIndex = 0;
+    this.options = [   
+       {id:0, name:'all',label:'Select All',isActiveDescendant:true,selected:false},
+    ].concat(value);
+  };
+  
+  @Output() filterValueChange: EventEmitter<string | null> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<string[]> = new EventEmitter();
 
   @ViewChild('input') input!: ElementRef;
   @ViewChild('dropdown') dropdown!: ElementRef;
@@ -42,6 +46,21 @@ export class MultiselectDropdownComponent {
     }
   };
 
+  constructor(){}
+  ngOnInit(): void {
+   this.filter.valueChanges.pipe(
+    startWith(''),
+    distinctUntilChanged()
+   ).subscribe(
+    value => {
+      console.log(value)
+      this.filterValueChange.emit(value);
+
+    }
+   )
+    
+  }
+
   toggleDropdown = () => {
     this.isDropdownOpen = !this.isDropdownOpen;
     if (this.isDropdownOpen) {
@@ -55,7 +74,7 @@ export class MultiselectDropdownComponent {
 
     let itemId = `item${this.currentOptionIndex}`;
     const currentOption = document.getElementById(itemId);
-    //currentOption?.classList.add('current');
+    console.log(currentOption);
     currentOption?.focus();
     currentOption?.scrollIntoView({
       block: 'nearest',
@@ -66,9 +85,8 @@ export class MultiselectDropdownComponent {
 
   handleKeyPress = (event:KeyboardEvent) => {
     //event.preventDefault();
-    console.log(event);
    const { key } = event;
-   const openKeys:string[] = [KeyboardKey.Enter, KeyboardKey.Space];
+   const openKeys:string[] = [KeyboardKey.Enter];
  
    if (!this.isDropdownOpen && openKeys.includes(key) || (this.isDropdownOpen && key === KeyboardKey.Escape)) {
      this.toggleDropdown();
@@ -83,9 +101,8 @@ export class MultiselectDropdownComponent {
       case KeyboardKey.ArrowUp:
         this.moveFocusUp();
         break;
-      case KeyboardKey.Enter:
       case ' ':
-        this.selectCurrentOption();
+        this.selectCurrentOption(event);
         break;
       default:
         break;
@@ -94,15 +111,14 @@ export class MultiselectDropdownComponent {
   };
 
   moveFocusDown = () => {
-    // const elements = document.querySelectorAll('[role="option"]');
 
     if (this.currentOptionIndex < this.options.length - 1) {
       this.currentOptionIndex++;
     } else {
       this.currentOptionIndex = 0;
     };
-    this.options.forEach(el =>{
-      if(el.id == this.currentOptionIndex){
+    this.options.forEach((el,i) =>{
+      if(i == this.currentOptionIndex){
         el.isActiveDescendant=true;
       }else{
         el.isActiveDescendant=false;
@@ -112,37 +128,33 @@ export class MultiselectDropdownComponent {
     this.focusCurrentOption();
   };
   moveFocusUp = () => {
-    //const elements = document.querySelectorAll('[role="option"]');
 
     if (this.currentOptionIndex > 0) {
       this.currentOptionIndex--;
     } else {
       this.currentOptionIndex = this.options.length - 1;
     }
+    this.options.forEach(el =>{
+      if(el.id == this.currentOptionIndex){
+        el.isActiveDescendant=true;
+      }else{
+        el.isActiveDescendant=false;
+      }
+    });
     this.focusCurrentOption();
   };
-  selectCurrentOption = () => {
-    const elements = document.querySelectorAll('[role="option"]');
 
-    const selectedOption = elements[this.currentOptionIndex];
-    this.selectOptionByElement(selectedOption);
+  selectCurrentOption = (event:KeyboardEvent) => {
+    event.preventDefault();
+
+    this.options[this.currentOptionIndex].selected=!this.options[this.currentOptionIndex].selected;
+    if(!this.currentOptionIndex){
+      this.options.forEach(el => el.selected = this.options[this.currentOptionIndex].selected);
+    }
+
+
   };
 
-  selectOptionByElement = (optionElement:any) => {
-    console.log(optionElement);
-    // const optionValue = optionElement.textContent;
-     const elements = document.querySelectorAll('[role="option"]');
-    // console.log(elements);
-
-    // //elements.textContent = optionValue;
-    elements.forEach(option => {
-      option.classList.remove('active');
-      option.setAttribute('aria-selected', 'false');
-    });
-  
-     optionElement.classList.add('active');
-     optionElement.setAttribute('aria-selected', 'true');
-  }
 
   
 

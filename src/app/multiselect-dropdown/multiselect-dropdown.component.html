@@ -2,9 +2,9 @@
 <div class="combo-wrap">
   <input
     type="text"
-    id="jokes"
-    name="jokes"
-    [(ngModel)]="filter"
+    id="filter"
+    name="filter"
+    [formControl]="filter"
     (click)="toggleDropdown()"
     (keydown)="handleKeyPress($event)"
     role="combobox"
@@ -22,55 +22,19 @@
   [ngClass]="{'active': isDropdownOpen}"
   #dropdown
   >
-    @for (item of options; track item.id) {
-        <li role="option" id="item{{item.id}}" 
-        attr.aria-labelledby="{{item.id}}-label"
+    @for (item of options; track $index) {
+        <li role="option" id="item{{$index}}" 
+        attr.aria-labelledby="{{$index}}-label"
         [attr.aria-checked]="item.selected"        
         [attr.aria-selected]="item.selected"
         [ngClass]="{'first':!item.id,'current':item.isActiveDescendant}"
-
         >
             <div class="checkbox">
-                <input type="checkbox" tabindex="-1" [id]="item.id" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
-                <label [for]="item.id" id="{{item.id}}-label">{{item.name}}</label>
+                <input type="checkbox" [id]="$index" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
+                <label [for]="$index" id="{{$index}}-label">{{item.name}}</label>
             </div>
         </li>
     }
-    <!-- <li class="option first" role="option" id="item0" >
-        <div class="checkbox">
-            <input type="checkbox" id="all" name="all" value="all" />
-            <label for="all">Select All</label>
-        </div>
-    </li>
-    <li class="option" role="option" id="item1" >
-      <div class="checkbox">
-          <input type="checkbox" id="puns" name="puns" value="puns" />
-          <label for="puns">Puns</label>
-      </div>
-    </li>
-    <li class="option" role="option" id="item2">
-        <div class="checkbox">
-            <input type="checkbox" id="riddles" name="riddles" value="riddles" />
-            <label for="riddles">Riddles</label>
-        </div>
-    </li>
-    <li class="option" role="option" id="item3">
-        <div class="checkbox">
-            <input type="checkbox" id="observations" name="observations" value="observations" />
-            <label for="observations">Observations</label>
-        </div>
-    </li>
-    <li class="option" role="option" id="item4">
-        <div class="checkbox">
-            <input type="checkbox" id="knock" name="knock" value="knock" />
-            <label for="knock">Knock-knock</label>
-        </div>
-    </li>
-    <li class="option" role="option" id="item5">
-        <div class="checkbox">
-            <input type="checkbox" id="one-liners" name="one-liners" value="one-liners" />
-            <label for="one-liners">One liners</label>
-        </div>
-    </li> -->
+  
   </ul>
 </div>

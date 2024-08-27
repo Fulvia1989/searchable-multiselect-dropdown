@@ -1,5 +1,10 @@
 <router-outlet />
 <div class="main-container">
+    @if( filteredOptions$  | async; as filteredoptions ){
 
-    <multiselect-dropdown></multiselect-dropdown>
+        <multiselect-dropdown 
+        [filteredElements]="filteredoptions" 
+        (filterValueChange)="updateList($event)"></multiselect-dropdown>
+    }
+
 </div>

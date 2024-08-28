@@ -20,6 +20,7 @@ ul{
     transform-origin: top left;
     transition: all .2s ease-in-out;
     pointer-events: none;
+    position: relative;
     z-index: 2;
     &.active {
         opacity: 1;
@@ -28,8 +29,14 @@ ul{
     }
 
     li{
+        background-color: #f3f3f3;
+
         &.first{
             border-bottom: 1px solid;
+            z-index: 3;
+            position: sticky;
+            top:0;
+            
         }
         &.current {
             background: lightgray;
@@ -47,6 +54,7 @@ ul{
 .checkbox{
     position: relative;
     padding: 0.5rem;
+
 
     input[type="checkbox"] {
         opacity: 0;
@@ -92,6 +100,33 @@ ul{
     }
     input[type="checkbox"]:focus + label::before {
         outline: rgb(59, 153, 252) auto 3px;
+    }
+}
+.selected-elements{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    .chip{
+        display: flex;
+        align-items: center;
+        padding: 0.3rem 1rem;
+        margin: 0.2rem;
+        border: 1px solid lightgray;
+        width: fit-content;
+        border-radius: 0.5rem;
+        .icon-button{
+            background: none;
+            border: none;
+            border-radius: 50%;
+            margin-left: 1rem;
+            &::before{
+                display: inline-block;
+                content: '\002b';
+                transform: rotate(45deg);
+                font-size: 1.5rem;
+            }
+        }
     }
 }
 

@@ -21,6 +21,7 @@ export class MultiselectDropdownComponent {
   filter:FormControl = new FormControl<string>('');
   currentOptionIndex:number = 0;
 
+  selected:OptionElement[] =[];
   options:OptionElement[]=[];
   @Input() set filteredElements(value:OptionElement[]){
     this.currentOptionIndex = 0;
@@ -30,7 +31,7 @@ export class MultiselectDropdownComponent {
   };
   
   @Output() filterValueChange: EventEmitter<string | null> = new EventEmitter();
-  @Output() selectedChange: EventEmitter<string[]> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<OptionElement[]> = new EventEmitter();
 
   @ViewChild('input') input!: ElementRef;
   @ViewChild('dropdown') dropdown!: ElementRef;
@@ -77,7 +78,9 @@ export class MultiselectDropdownComponent {
     console.log(currentOption);
     currentOption?.focus();
     currentOption?.scrollIntoView({
-      block: 'nearest',
+      //block: 'nearest',
+      behavior: 'smooth',
+      block: 'center'
     });
   
   };
@@ -143,14 +146,25 @@ export class MultiselectDropdownComponent {
     });
     this.focusCurrentOption();
   };
+  
 
   selectCurrentOption = (event:KeyboardEvent) => {
     event.preventDefault();
+    let currentEl = this.options[this.currentOptionIndex];
+    currentEl.selected=!currentEl.selected;
 
-    this.options[this.currentOptionIndex].selected=!this.options[this.currentOptionIndex].selected;
     if(!this.currentOptionIndex){
-      this.options.forEach(el => el.selected = this.options[this.currentOptionIndex].selected);
-    }
+      this.options.forEach(el => el.selected = currentEl.selected);
+      this.selected = [...this.options.filter(el => el.selected)];
+    }else{
+      if(currentEl.selected){
+        this.selected.push(currentEl);
+      }else{
+        this.selected = this.selected.filter(el => el.id !== currentEl.id);
+      }
+    };
+    this.selectedChange.emit(this.selected);
+ 
 
 
   };

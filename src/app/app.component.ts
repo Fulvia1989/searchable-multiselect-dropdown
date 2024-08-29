@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MultiselectDropdownComponent } from './multiselect-dropdown/multiselect-dropdown.component';
-import { OptionElement } from './multiselect-dropdown/models/select';
 import { BehaviorSubject, map, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { MultiselectComponent } from './multiselect/multiselect.component';
+import { MultiselectDropdownComponent } from './accessible-multiselect-dropdown/multiselect-dropdown.component';
+import { OptionElement } from './accessible-multiselect-dropdown/models/select';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,MultiselectDropdownComponent,AsyncPipe],
+  imports: [RouterOutlet,MultiselectDropdownComponent,AsyncPipe, MultiselectComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

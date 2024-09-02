@@ -9,8 +9,8 @@
         @for (item of options; track $index) {
             <li class="item">
                 <div class="checkbox">
-                    <input type="checkbox" [id]="$index" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
-                    <label [for]="$index" id="{{$index}}-label">{{item.label}}</label>
+                    <input type="checkbox" id="input-{{$index}}" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
+                    <label for="input-{{$index}}" id="{{$index}}-label">{{item.label}}</label>
                 </div>
             </li>
         }

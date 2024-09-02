@@ -1,17 +1,18 @@
 
 .wrapper{
     box-sizing: border-box;
+    position: relative;
 }
 .select-btn{
     display: flex;
-    height: 50px;
+    height: 3rem;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
-    border-radius: 8px;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
     cursor: pointer;
     background-color: #fff;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
 
     &.open{
@@ -35,11 +36,11 @@
 
     .arrow-down{
         position: relative;
-        top: -5px;
+        top: 0;
         content: "";
         display: inline-block;
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
         border-right: 0.2em solid black;
         border-top: 0.2em solid black;
         transform: rotate(45deg);
@@ -51,6 +52,10 @@
 }
 .list-items{
     position: absolute;
+    top: 100%; 
+    //bottom: 0;
+    left: 0; 
+    //right: 0;
     z-index:2;
     min-width: max-content;
     box-sizing: border-box;
@@ -85,6 +90,7 @@
 .checkbox{
     position: relative;
     padding: 0.5rem;
+    width: 100%;
 
 
     input[type="checkbox"] {
@@ -97,7 +103,8 @@
         display: inline-block;
         width: 100%;
         min-width: max-content;
-        padding-right: 2rem;
+        cursor: pointer;
+        //padding-right: 2rem;
 
         &::before,&::after{
             position: absolute;
@@ -124,6 +131,15 @@
             transform: rotate(-45deg);
             transition: opacity 0.2s;
         }
+    }
+    input[type="checkbox"] + label::after {
+        opacity: 0;
+    }
+    input[type="checkbox"]:checked + label::after {
+        opacity: 1;
+    }
+    input[type="checkbox"]:focus + label::before {
+        outline: rgb(59, 153, 252) auto 3px;
     }
 }
 

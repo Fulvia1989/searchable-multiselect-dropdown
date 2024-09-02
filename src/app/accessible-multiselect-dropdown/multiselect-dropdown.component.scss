@@ -4,15 +4,16 @@
         padding: 0.5rem;
         box-sizing: border-box;
     }
+    position: relative;
 }
 
-ul{
+ul.dropdown-list{
     list-style: none;
     background-color: #f3f3f3;
-    width: 100%;
+    box-sizing: border-box;
+    width: 100%;    
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     max-height: 10rem;
     overflow-y: auto;
     opacity: 0;
@@ -20,7 +21,9 @@ ul{
     transform-origin: top left;
     transition: all .2s ease-in-out;
     pointer-events: none;
-    position: relative;
+    position: absolute;
+    top:100%;
+    left:0;
     z-index: 2;
     &.active {
         opacity: 1;
@@ -107,6 +110,7 @@ ul{
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
+    min-height: 10rem;
     .chip{
         display: flex;
         align-items: center;

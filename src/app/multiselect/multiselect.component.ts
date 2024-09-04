@@ -13,6 +13,7 @@ import { NgClass } from '@angular/common';
 export class MultiselectComponent {
   @Input() options:OptionElement[] =[];
   openDropdown:boolean =false;
+  disableCtrl = false;
 
 
 }

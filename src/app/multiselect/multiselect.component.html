@@ -1,13 +1,20 @@
 <div class="wrapper">
-    <div class="select-btn " [ngClass]="{'open': openDropdown}" (click)="openDropdown = !openDropdown">
+    <div class="select-btn " 
+    [attr.aria-disabled]="disableCtrl"
+    [ngClass]="{'open': openDropdown}" 
+    (click)="openDropdown = !openDropdown">
         <span class="btn-text">Select a joke</span>
         <span class="arrow-down">
     
         </span>
     </div>
-    <ul class="list-items">
-        @for (item of options; track $index) {
-            <li class="item">
+    <ul class="list-items" 
+    role="listbox"         
+    aria-multiselectable="true"
+    [attr.aria-hidden]="!openDropdown"
+    >
+        @for (item of options; track item.id) {
+            <li class="item" role="option" id="item{{item.id}}">
                 <div class="checkbox">
                     <input type="checkbox" id="input-{{$index}}" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
                     <label for="input-{{$index}}" id="{{$index}}-label">{{item.label}}</label>

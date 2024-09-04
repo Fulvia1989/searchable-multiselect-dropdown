@@ -15,6 +15,17 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
 
+    &[aria-disabled="true"] {
+        opacity: 0.5;
+        background-color: var(--disabled);
+        color: var(--dark);
+        pointer-events:none;
+    
+    }
+    &[aria-disabled="true"] ~ .arrow-down{
+        opacity: 0.5;
+    }
+
     &.open{
         .arrow-down{
             transform: rotate(135deg);
@@ -60,9 +71,9 @@
     min-width: max-content;
     box-sizing: border-box;
     width: 100%;
-    margin-top: 15px;
-    border-radius: 8px;
-    padding: 16px;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     animation-name: fadeInDown;
@@ -76,11 +87,11 @@
         display: flex;
         align-items: center;
         list-style: none;
-        height: 50px;
+        //height: 50px;
         cursor: pointer;
         transition: 0.3s;
-        padding: 0 15px;
-        border-radius: 8px;
+        padding: 0 0.5rem;
+        border-radius: 0.3rem;
         &:hover{
             background-color: #e3f2fd;
         }
@@ -122,7 +133,7 @@
         }
         &::after {
             display: inline-block;
-            height: 4px;
+            height: 5px;
             width: 9px;
             border-left: 2px solid;
             border-bottom: 2px solid;

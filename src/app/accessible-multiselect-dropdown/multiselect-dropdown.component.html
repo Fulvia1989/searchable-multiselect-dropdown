@@ -1,5 +1,5 @@
 <h3>Select a joke</h3>
-<label for="filter">Pick what type of jokes you like</label>
+<label for="filter">Pick what type of fruit you like</label>
 <div class="combo-wrap">
   <input
     type="text"
@@ -16,10 +16,10 @@
     [attr.aria-expanded]="isDropdownOpen"
     [attr.aria-activedescendant]="currentOptionIndex"
     />
-  <span aria-hidden="true" data-trigger="multiselect"></span>
+  <span class="icon" aria-hidden="true"></span>
 
   <ul id="joketypes" role="listbox" aria-label="Jokes" class="dropdown-list"
-  [attr.aria-hidden]="!isDropdownOpen"
+  [attr.aria-hidden]="isDropdownOpen ? false : true"
   aria-multiselectable="true"
   [ngClass]="{'active': isDropdownOpen}"
   #dropdown
@@ -27,12 +27,18 @@
     @for (item of options; track $index) {
         <li role="option" id="item{{$index}}" 
         attr.aria-labelledby="{{$index}}-label"
+        [attr.aria-hidden]="isDropdownOpen ? false : true"
         [attr.aria-checked]="item.selected"        
         [attr.aria-selected]="item.selected"
         [ngClass]="{'first':!item.id,'current':item.isActiveDescendant}"
+        
         >
-            <div class="checkbox">
-                <input type="checkbox" [id]="$index" [name]="item.name" [value]="item.name" [(ngModel)]="item.selected"/>
+            <div class="checkbox" 
+            >
+                <input type="checkbox" [id]="$index" [name]="item.name" 
+                [attr.aria-hidden]="!isDropdownOpen"
+                [tabIndex]="isDropdownOpen ? 0 : -1"
+                [(ngModel)]="item.selected"/>
                 <label [for]="$index" id="{{$index}}-label">{{item.label}}</label>
             </div>
         </li>

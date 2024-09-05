@@ -23,6 +23,7 @@ export class MultiselectDropdownComponent {
 
   selected:OptionElement[] =[];
   options:OptionElement[]=[];
+  @Input() label:string ='select';
   @Input() set filteredElements(value:OptionElement[]){
     this.currentOptionIndex = 0;
     this.options = [   
@@ -42,6 +43,7 @@ export class MultiselectDropdownComponent {
     const isClickInsideButton = this.input.nativeElement.contains(event.target);
     const isClickInsideDropdown = this.dropdown.nativeElement.contains(event.target);
   
+    console.log(isClickInsideButton);
     if (!isClickInsideButton && !isClickInsideDropdown && this.isDropdownOpen){
       this.toggleDropdown();
     }
@@ -72,8 +74,8 @@ export class MultiselectDropdownComponent {
     }
   };
   focusCurrentOption = () => {
-
-    let itemId = `item${this.currentOptionIndex}`;
+    let currentEl = this.options[this.currentOptionIndex];
+    let itemId = `item-${currentEl.name}-${this.currentOptionIndex}`;
     const currentOption = document.getElementById(itemId);
     console.log(currentOption);
     currentOption?.focus();

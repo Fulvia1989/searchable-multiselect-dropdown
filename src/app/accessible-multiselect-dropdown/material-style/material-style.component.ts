@@ -13,7 +13,7 @@ import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: '../multiselect-dropdown.component.html',
+  templateUrl: './material-style.component.html',
   styleUrl: './material-style.component.scss'
 })
 export class MaterialComponent {
@@ -23,6 +23,7 @@ export class MaterialComponent {
 
   selected:OptionElement[] =[];
   options:OptionElement[]=[];
+  @Input() label:string ='select';
   @Input() set filteredElements(value:OptionElement[]){
     this.currentOptionIndex = 0;
     this.options = [   
@@ -72,8 +73,8 @@ export class MaterialComponent {
     }
   };
   focusCurrentOption = () => {
-
-    let itemId = `item${this.currentOptionIndex}`;
+    let currentEl = this.options[this.currentOptionIndex];
+    let itemId = `item-${currentEl.name}-${this.currentOptionIndex}`;
     const currentOption = document.getElementById(itemId);
     console.log(currentOption);
     currentOption?.focus();

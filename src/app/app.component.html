@@ -4,6 +4,7 @@
     @if( filteredOptions$  | async; as filteredoptions ){
 
         <multiselect-dropdown 
+        [label]="'jokes'"
         [filteredElements]="filteredoptions" 
         (filterValueChange)="updateList($event)"></multiselect-dropdown>
     }
@@ -13,6 +14,7 @@
             @if( filteredFruits$  | async; as filteredFruits ){
 
                 <material-multiselect
+                [label]="'fruits'"
                 [filteredElements]="filteredFruits" 
                 (filterValueChange)="updateFruitList($event)"></material-multiselect>
             }

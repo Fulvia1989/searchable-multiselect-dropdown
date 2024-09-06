@@ -71,7 +71,7 @@ export class AppComponent {
   veggieFilter$: BehaviorSubject<string|null> = new BehaviorSubject<string|null>(null);
   filteredVeggies$  = this.fruitFilter$.pipe(
     startWith(null),
-    map((el: string | null) => (el ? this._filter(el, this.fruits) : this.fruits.slice())),
+    map((el: string | null) => (el ? this._filter(el, this.vegetables) : this.vegetables.slice())),
 
   );
   updateVeggiesList(value:string|null){

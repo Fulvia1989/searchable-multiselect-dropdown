@@ -58,7 +58,7 @@ ul.dropdown-list{
     pointer-events: none;
     visibility: hidden;
     position: absolute;
-    top:100%;
+    top:calc(100% + 2px);
     left:0;
     z-index: 2;
     &.active {

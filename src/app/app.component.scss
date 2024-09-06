@@ -5,4 +5,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
+    min-height: max-content;
+
+    .box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }

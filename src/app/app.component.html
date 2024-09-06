@@ -9,7 +9,7 @@
         (filterValueChange)="updateList($event)"></multiselect-dropdown>
     }
     <div class="grid">
-        <div>
+        <div class="box">
             <h3>Material Style</h3>
             @if( filteredFruits$  | async; as filteredFruits ){
 
@@ -19,7 +19,7 @@
                 (filterValueChange)="updateFruitList($event)"></material-multiselect>
             }
         </div>
-        <div>
+        <div class="box">
             <h3>Bootstrap Italia Style</h3>
             @if( filteredVeggies$  | async; as filteredVeggies ){
 

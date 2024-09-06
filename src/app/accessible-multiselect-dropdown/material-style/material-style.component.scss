@@ -12,7 +12,7 @@
         background-color: inherit;
         position: relative;
     }
-    border:1px solid hsl(0, 0%, 64%);
+    border:1px solid #a3a3a3;
     outline: none;
     transition: outline 0.1s ease-in-out;
     border-radius: 4px;
@@ -47,10 +47,26 @@ ul.dropdown-list{
 
 .checkbox{
     input[type="checkbox"]:focus + label::before {
-        outline: #7E57C2    auto 3px;
+        outline: #7E57C2    auto 1px;
+    }
+    input[type="checkbox"]:checked + label::before{
+        background-color: #7E57C2;
+        border-color: #7E57C2;
+
     }
     label{
         padding: 1rem 0.6rem;
+        &::before{
+
+
+            border-radius: 2px;
+        }
+        &::after {
+            display: inline-block;
+            right: calc(1rem + 4px);
+            top: calc(1rem + 4px);
+            color: white;
+        }
     }
 }
 

@@ -3,3 +3,48 @@
     font-family: "Titillium Web", sans-serif;
 
 }
+.combo-wrap{
+    margin-top: 2rem;
+    background-color: #fafafa;
+    padding: 0.3rem;
+    border-bottom: 1px solid #a3a3a3;
+    transition: border-bottom 0.1s ease-in-out;
+
+    input[type="text"]{
+        border: none;
+        outline: none;
+        background-color: inherit;
+        position: relative;
+    }
+
+    &:has(input[type="text"]:focus),&:has(input[data-not-empty="true"]){
+        border-bottom:2px solid #0066CC;
+    }
+    .input-label{
+        font-weight: 600;
+        font-size: 16px;
+        top: calc(50% - 0.8rem);
+        letter-spacing: 1px;
+    }
+}
+
+.checkbox{
+    input[type="checkbox"]:focus + label::before {
+        outline: #0066CC    auto 3px;
+    }
+    input[type="checkbox"]:checked + label::before{
+        background-color: #0066CC;
+        border-color: #0066CC;
+
+    }
+    label{
+        padding: 1rem 0.6rem;
+    
+        &::after {
+            display: inline-block;
+            right: calc(1rem + 4px);
+            top: calc(1rem + 4px);
+            color: white;
+        }
+    }
+}

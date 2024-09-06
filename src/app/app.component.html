@@ -19,6 +19,16 @@
                 (filterValueChange)="updateFruitList($event)"></material-multiselect>
             }
         </div>
+        <div>
+            <h3>Bootstrap Italia Style</h3>
+            @if( filteredVeggies$  | async; as filteredVeggies ){
+
+                <bootstrap-multiselect
+                [label]="'veggies'"
+                [filteredElements]="filteredVeggies" 
+                (filterValueChange)="updateVeggiesList($event)"></bootstrap-multiselect>
+            }
+        </div>
     </div>
 
     <h2>Pretty, but...</h2>

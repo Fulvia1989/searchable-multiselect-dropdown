@@ -5,7 +5,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultiselectDropdownComponent } from '../multiselect-dropdown.component';
 
 @Component({
-  selector: 'material-multiselect',
+  selector: 'bootstrap-multiselect',
   standalone: true,
   imports: [
     NgClass,
@@ -13,9 +13,9 @@ import { MultiselectDropdownComponent } from '../multiselect-dropdown.component'
     ReactiveFormsModule
   ],
   templateUrl: '../multiselect-dropdown.component.html',
-  styleUrl: './material-style.component.scss'
+  styleUrl: './bootstrap-italia.component.scss'
 })
-export class MaterialComponent extends MultiselectDropdownComponent{
+export class BootstrapItaliaComponent extends MultiselectDropdownComponent{
   
 
   

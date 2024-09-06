@@ -27,7 +27,7 @@ export class MultiselectDropdownComponent {
   @Input() set filteredElements(value:OptionElement[]){
     this.currentOptionIndex = 0;
     this.options = [   
-       {id:0, name:'all',label:'Select All',isActiveDescendant:true,selected:false},
+       {id:0, name:`all-${this.label}`,label:'Select All',isActiveDescendant:true,selected:false},
     ].concat(value);
   };
   
@@ -68,10 +68,7 @@ export class MultiselectDropdownComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
     if (this.isDropdownOpen) {
       this.focusCurrentOption();
-    } else {
-
-      this.input.nativeElement.focus();
-    }
+    } 
   };
   focusCurrentOption = () => {
     let currentEl = this.options[this.currentOptionIndex];
@@ -149,9 +146,24 @@ export class MultiselectDropdownComponent {
     this.focusCurrentOption();
   };
   
+  select(index:number){
+    this.currentOptionIndex = index;
+   // console.log(this.currentOptionIndex)
+    this.options.forEach(el =>{
+      if(el.id == this.currentOptionIndex){
+        el.isActiveDescendant=true;
+      }else{
+        el.isActiveDescendant=false;
+      }
+    });
+    this.selectCurrentOption()
+  }
 
-  selectCurrentOption = (event:KeyboardEvent) => {
-    event.preventDefault();
+  selectCurrentOption = (event?:KeyboardEvent) => {
+    if(event){
+
+      event.preventDefault();
+    }
     let currentEl = this.options[this.currentOptionIndex];
     currentEl.selected=!currentEl.selected;
 

@@ -1,21 +1,21 @@
-<h3>Select a joke</h3>
-<label for="filter">Pick what type of fruit you like</label>
 <div class="combo-wrap">
   <input
-    type="text"
-    id="filter-{{label}}"
-    name="filter"
-    [formControl]="filter"
-    (click)="toggleDropdown()"
-    (keydown)="handleKeyPress($event)"
-    role="combobox"
-    autocomplete="off"
-    #input
-    attr.aria-controls="{{label}}-types"
-    aria-autocomplete="list"
-    [attr.aria-expanded]="isDropdownOpen"
-    [attr.aria-activedescendant]="currentOptionIndex"
-    />
+  type="text"
+  id="filter-{{label}}"
+  name="filter-{{label}}"
+  [formControl]="filter"
+  (click)="toggleDropdown()"
+  (keydown)="handleKeyPress($event)"
+  role="combobox"
+  autocomplete="off"
+  #input
+  [attr.data-not-empty]="filter.value && filter.value.length ? true : false"
+  attr.aria-controls="{{label}}-types"
+  aria-autocomplete="list"
+  [attr.aria-expanded]="isDropdownOpen"
+  [attr.aria-activedescendant]="currentOptionIndex"
+  />
+  <label for="filter" class="input-label">{{label}}</label>
   <span class="icon" aria-hidden="true"></span>
 
   <ul id="{{label}}-types" role="listbox" attr.aria-label="{{label}}" class="dropdown-list"
@@ -38,6 +38,7 @@
                 <input type="checkbox" id="{{$index}}-{{item.name}}" [name]="item.name" 
                 [attr.aria-hidden]="!isDropdownOpen"
                 [tabIndex]="isDropdownOpen ? 0 : -1"
+                (ngModelChange)="select($index)"
                 [(ngModel)]="item.selected"/>
                 <label for="{{$index}}-{{item.name}}" id="{{$index}}-{{item.name}}-label">{{item.label}}</label>
             </div>

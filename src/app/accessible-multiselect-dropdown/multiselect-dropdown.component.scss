@@ -1,10 +1,33 @@
 .combo-wrap{
+    position: relative;
+    margin-top: 1rem;
+
     input[type="text"]{
         width: 100%;
         padding: 0.5rem;
         box-sizing: border-box;
+        position: relative;
     }
-    position: relative;
+    .input-label{
+        color: #262626;
+        font-size: 1rem;
+        text-transform: capitalize;
+        left: 0;
+        margin-left: 0.5rem;
+        padding: 0 10px;
+        pointer-events: none;
+        position: absolute;
+        top: calc(50% - 0.5rem);
+        transition: all 0.2s linear;
+        z-index: 2;
+
+    }
+
+    input:focus ~ .input-label, input[data-not-empty="true"]~ .input-label {
+
+        top:-70%;
+        background-color: inherit;
+    }
 
     .icon::after {
         position:absolute;
@@ -15,7 +38,7 @@
         height: 0;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-top: 6px solid hsl(0, 0%, 15%);
+        border-top: 6px solid #262626;
     }
 }
 
@@ -59,8 +82,8 @@ ul.dropdown-list{
         &.current {
             background: lightgray;
         }
-        &:hover{
-            background: rgba(211, 211, 211, 0.5);
+        &:not(.current):hover{
+            background: #e3e3e3;
 
         }
         &:focus{
@@ -70,7 +93,6 @@ ul.dropdown-list{
 }
 
 .checkbox{
-    padding: 0.5rem;
 
 
 
@@ -83,6 +105,10 @@ ul.dropdown-list{
         position: relative;
         display: inline-block;
         width: 100%;
+        box-sizing: border-box;
+        padding: 0.5rem;
+        padding-right: 1rem;
+
 
         &::before,&::after{
             position: absolute;
@@ -95,7 +121,7 @@ ul.dropdown-list{
             height: 1rem;
             width: 1rem;
             border: 1px solid;   
-            right: 0;
+            right: 1rem;
             border-radius: 3px;
         }
         &::after {
@@ -104,8 +130,8 @@ ul.dropdown-list{
             width: 9px;
             border-left: 2px solid;
             border-bottom: 2px solid;
-            right: 4px;
-            top: 4px;
+            right: calc(1rem + 4px);
+            top: 13px;
             transform: rotate(-45deg);
             transition: opacity 0.2s;
         }
